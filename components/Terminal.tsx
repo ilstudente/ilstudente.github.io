@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface TerminalLine {
   type: "command" | "output" | "error" | "page" | "contact";
@@ -360,7 +360,7 @@ EXAMPLES
                   >
                     {line.text.split('\n').map((textLine, idx) => {
                       // Parse line for links and mentors
-                      const parts: JSX.Element[] = [];
+                      const parts: React.ReactElement[] = [];
                       let remainingText = textLine;
                       let key = 0;
 
