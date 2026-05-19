@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIY Drone — David Ettel</title>
+  <style>
+    body { font-family: monospace; max-width: 700px; margin: 60px auto; padding: 0 20px; line-height: 1.6; }
+    h1 { margin-bottom: 0; }
+    h2 { margin-top: 2em; }
+    a { color: inherit; }
+    ul { padding-left: 1.2em; }
+    .section { margin-top: 2em; }
+    .back { margin-bottom: 2em; font-size: 0.9em; }
+    img { max-width: 100%; margin: 1em 0; display: block; }
+    .img-row { display: flex; gap: 1em; flex-wrap: wrap; margin: 1em 0; }
+    .img-row img { max-width: calc(50% - 0.5em); flex: 1 1 200px; }
+    .caption { font-size: 0.85em; color: #555; margin-top: -0.5em; margin-bottom: 1em; }
+    table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+    td, th { border: 1px solid #ccc; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; }
+    th { font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<div class="back"><a href="index.html">← David Ettel</a></div>
+
+<h1>DIY Drone</h1>
+<p>PS70: Introduction to Digital Fabrication — Harvard, 2024</p>
+
+<div class="section">
+  <h2>Abstract</h2>
+  <p>I built a 70mm class drone from scratch with a carbon fiber frame and 3D-printed propellers. The project involved component selection, frame design and fabrication through six iterations, propeller design through four iterations, soldering, and flight controller configuration. Major challenges included selecting compatible components, soldering tiny pads on the AIO board, and iterating on the frame and propellers until they worked together.</p>
+  <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/Finished.png" alt="Completed drone">
+  <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/setup.jpeg" alt="Full setup with radio controller">
+</div>
+
+<div class="section">
+  <h2>Material List</h2>
+  <table>
+    <tr><th>Component</th><th>Source</th></tr>
+    <tr><td>Happymodel Crux F405HD ELRS AIO flight controller</td><td>DefianceRC</td></tr>
+    <tr><td>1104 Micro Brushless Motors 4300KV ×4</td><td>Amazon</td></tr>
+    <tr><td>Ovonic 11.1V 450mAh 3S LiPo battery</td><td>Amazon</td></tr>
+    <tr><td>RadioMaster T8L radio controller</td><td>Amazon</td></tr>
+    <tr><td>Carbon fiber sheet</td><td>Lab</td></tr>
+    <tr><td>SLA resin, Kapton tape, solder, hot glue, M2 screws, wires, cable ties</td><td>Lab</td></tr>
+    <tr><td>ELRS radio receiver + antenna, JST connectors</td><td>Lab</td></tr>
+  </table>
+  <div class="img-row">
+    <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/fc.jpg" alt="Flight controller">
+    <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/motors.jpg" alt="Brushless motors">
+  </div>
+  <div class="img-row">
+    <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/battery.jpg" alt="LiPo battery">
+    <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/t8l.jpg" alt="RadioMaster T8L controller">
+  </div>
+</div>
+
+<div class="section">
+  <h2>Choosing Motors and Flight Controller</h2>
+  <p>I chose the 70mm class to be able to iterate quickly on the frame and propellers. I chose a commercial all-in-one (AIO) flight controller rather than building a custom ESP32-based board because loop frequency requirements for stable flight (8 kHz default on STM32) far exceed what an ESP32 can sustain (250 Hz–1 kHz). The Happymodel Crux F405HD was selected for price and availability.</p>
+</div>
+
+<div class="section">
+  <h2>Frame Iterations</h2>
+  <p>The frame went through six iterations before reaching the final design:</p>
+  <ol>
+    <li>Naive PLA print — too flexible</li>
+    <li>Reinforced PLA — still insufficient rigidity</li>
+    <li>Rotated motor mounts — better geometry</li>
+    <li>AIO board mounting integrated</li>
+    <li>Switched to carbon fiber sheet</li>
+    <li>Waterjet-cut carbon fiber with through-holes for motor shafts (final)</li>
+  </ol>
+  <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/framechronicle.png" alt="Frame prototypes in chronological order">
+  <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/CarbonFrame.png" alt="Waterjet-cut carbon fiber frame">
+</div>
+
+<div class="section">
+  <h2>Propellers</h2>
+  <p>The propellers went through four iterations. Research (Popișter 2025) confirmed that resin-printed propellers produce higher thrust than FDM. Final specs: 40mm diameter, 1.5mm hub bore, two-blade design generated with Claude.</p>
+  <ol>
+    <li>FDM print — insufficient resolution for blade geometry</li>
+    <li>FDM scaled up — still inadequate</li>
+    <li>Resin with downloaded CAD</li>
+    <li>Resin with Claude-generated STL (final)</li>
+  </ol>
+  <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/propellerchronicle.png" alt="Propeller iterations">
+  <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/ResinPropeller.png" alt="Final resin propeller">
+  <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/unscuccesfulresinpropellerprints.png" alt="Failed resin prints">
+</div>
+
+<div class="section">
+  <h2>Soldering</h2>
+  <p>The AIO board has very small solder pads. After hours of failed attempts, I used Kapton tape masking to isolate individual pads, which finally made clean joints possible.</p>
+  <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/tinysolderingpads.png" alt="Closeup of tiny solder pads on the AIO board">
+</div>
+
+<div class="section">
+  <h2>Battery</h2>
+  <p>Single-cell batteries were too large for the frame, so I ordered a 3S LiPo (11.1V, 450mAh). I made a custom wire-to-socket connection for safe disconnection and secured the battery to the frame with diagonal cable ties.</p>
+  <img src="https://ilstudente.github.io/PS70/assets/final/thumbs/cablebinderbatterystraps.png" alt="Battery mounted with cable ties">
+</div>
+
+<div class="section">
+  <h2>Controlling the Drone</h2>
+  <p>The flight controller runs <a href="https://betaflight.com" target="_blank">Betaflight</a>. The RadioMaster T8L transmitter communicates via ExpressLRS (ELRS), which provides low-latency RF link. Configuration involved binding the receiver, setting up motor direction and ESC calibration, and verifying sensor axes in Betaflight configurator.</p>
+</div>
+
+<div class="section">
+  <h2>Current Status and Future Work</h2>
+  <p>Three of four motors failed before flight testing could be completed. Replacements are on order. Once flying, planned additions include:</p>
+  <ul>
+    <li>FPV camera and 5.8 GHz video transmitter</li>
+    <li>PID tuning for stable flight</li>
+    <li>Further propeller iteration</li>
+    <li>Larger-class build</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Files</h2>
+  <ul>
+    <li><a href="https://ilstudente.github.io/PS70/assets/final/thumbs/finalframe.svg" target="_blank">Frame design (SVG/DXF)</a></li>
+    <li><a href="https://ilstudente.github.io/PS70/assets/final/finalpropeller.stl" target="_blank">Propeller model (STL)</a></li>
+  </ul>
+</div>
+
+</body>
+</html>
